@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.small-picture {
+    @apply w-[30%] h-full border-slate-200 border-2 rounded p-10 my-4 basis-1/4 bg-contain bg-no-repeat;
+}
+
+.small-picture-active {
+    @apply border-2 border-solid border-black ;
+}
+
+.dot-type {
+    @apply w-[10px] h-[10px] mr-5 bg-slate-200 border-2 border-black rounded-full;
+}
+
+.dot-type-active {
+    @apply bg-black ;
+}

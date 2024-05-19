@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.contentProduct {
+    @apply flex flex-col fixed items-center w-full pt-6 pb-4 translate-y-[60px] lg:translate-y-[65px] shadow-md lg:m-0 bg-white text-pinky-600 z-[999999]; 
+}
+
+
+.products {
+    @apply  w-full flex flex-row justify-between py-3 border-b-2 border-slate-200
+}
+
+.productShow {
+    @apply  animate-slideDown
+}
+
+.productHide { 
+    @apply animate-slideUp 
+}

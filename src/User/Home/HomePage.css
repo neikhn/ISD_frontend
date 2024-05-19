@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::selection {
+  @apply text-pinky-600;
+}
+
+.ct-menu-top-header-active {
+  @apply text-pinky-600;
+}
+
+.button {
+  @apply text-center uppercase tracking-wider py-4 px-8 text-sm font-semibold cursor-pointer hover:bg-opacity-95;
+}
+
+
+/* Slider */
+
+.arrow-slider {
+  @apply p-3 opacity-50 inline-block overflow-hidden w-[80px] hover:scale-125 hover:opacity-100 transition-all duration-300 ease-in-out
+  active:opacity-80 /* Giảm độ trong suốt khi active */
+  active:scale-90 /* Hiệu ứng scale nhỏ hơn khi active */;
+}
+
+.slider-content {
+  @apply transition-transform duration-500 ease-in-out;
+}
+
+
+/* End Slider */
+
+/* Subheadline */
+
+.subheadline {
+  @apply justify-center items-center mb-24;
+}
+
+.subheadline-deco-line {
+  @apply w-8 h-px bg-pinky-600;
+}
+.subheadline-label {
+  @apply uppercase mx-4 tracking-widest text-pinky-600 font-medium text-xs text-center;
+}
+
+/* End Subheadline */
+
+
+.ct-menu-top-header-expanded {
+  @apply absolute top-10 z-50 bg-white w-full text-center rounded-l animate-slideDown;
+}
+
+.ct-menu-top-header {
+  @apply cursor-pointer py-1 hover:text-gray-800 relative after:lg:absolute  after:lg:bottom-0 after:lg:left-0 
+    after:lg:bg-pinky-200 after:lg:h-0.5 after:lg:w-0 hover:after:lg:w-full hover:after:lg:transition-all hover:after:lg:ease-in-out
+    hover:after:lg:duration-700;
+}
+
+.ct-menu-top-header-active {
+  @apply text-gray-900;
+}
+
+.ct-menu-cart-header {
+  @apply cursor-pointer py-1 hover:text-gray-800;
+}
+
+.lmt-icon {
+  @apply w-5 h-5 inline-block;
+}
+
+
+/* BreadCummers */
+.lmt-breadcumbers {
+  @apply text-center uppercase py-3 px-6 text-sm font-medium cursor-pointer hover:bg-opacity-95
+  bg-white text-pinky-400 border-[2px] border-pinky-50 hover:border-pinky-600 hover:text-pinky-600 duration-300;
+}
+.lmt-breadcumbers-active {
+    @apply border-pinky-600 text-pinky-600;
+}

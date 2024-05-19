@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities; 
+
+.countdown-timer {@apply  flex flex-row justify-start items-center gap-8 mt-5 }
+.time-segment {@apply flex flex-col justify-center items-center gap-2 }
+.time-update {@apply w-[50px] h-[50px] flex justify-center items-center text-xl px-[20px] py-[10px] rounded shadow-md text-[#D94B4B] }
+.dateText {@apply text-[#D94B4B] }
