@@ -61,7 +61,7 @@ class ProfileContent extends React.Component<{}, ProfileState> {
       };
 
       const response = await fetch(
-        `http://localhost:3001/api/user/update-user/${_id}`,
+        `https://melanie-lac.vercel.app/api/user/update-user/${_id}`,
         {
           method: "PUT",
           headers: {

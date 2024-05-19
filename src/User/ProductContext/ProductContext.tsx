@@ -48,7 +48,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3001/api/product/get-all"
+          "https://melanie-lac.vercel.app/home/api/product/get-all"
         );
 
         if (!response.ok) {
