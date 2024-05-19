@@ -61,7 +61,7 @@ class ProfileContent extends React.Component<{}, ProfileState> {
       };
 
       const response = await fetch(
-        `https://melanie-lac.vercel.app/api/user/update-user/${_id}`,
+        `https://melanine-backend.onrender.com/api/user/update-user/${_id}`,
         {
           method: "PUT",
           headers: {
