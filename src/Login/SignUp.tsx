@@ -25,7 +25,7 @@ function SignUp() {
   };
 
   const handleSignUp = async () => {
-    const response = await fetch("http://localhost:3001/api/user/sign-up", {
+    const response = await fetch("https://melanine-backend.onrender.com/api/user/sign-up", {
       method: "post",
       body: JSON.stringify({
         name: userCredentials.NAME,

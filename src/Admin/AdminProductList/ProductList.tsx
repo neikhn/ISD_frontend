@@ -25,7 +25,7 @@ const ProductList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/product/get-all');
+        const response = await fetch('https://melanine-backend.onrender.com/api/product/get-all');
         const data = await response.json();
         if (data.status === 'OK') {
           setProducts(data.data);

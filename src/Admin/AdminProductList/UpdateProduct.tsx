@@ -39,7 +39,7 @@ const UpdateProduct: React.FC<UpdateProductProps> = ({ productId, currentData, o
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3001/api/product/update/${productId}`, {
+      const response = await fetch(`https://melanine-backend.onrender.com/api/product/update/${productId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
