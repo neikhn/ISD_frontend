@@ -269,7 +269,7 @@ const HomeHeader = () => {
             className="logo flex-1 basis-1/6 p-5 lg:p-0 text-center text-pinky-600 cursor-pointer"
             to={"/home"}
           >
-            <h3 className=" text-xl lg:text-2xl font-bold">Melamine</h3>
+            <h3 className=" text-xl lg:text-2xl font-bold">Melanie</h3>
             <div className="flex flex-row items-center justify-center">
               <div className="subheadline-deco-line"></div>
               <div className="lg:block hidden  lg:text-[10px]">

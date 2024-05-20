@@ -5,7 +5,7 @@ import { faHeart, faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import {  } from "react-router-dom";
 import { useProductContext } from "../ProductContext/ProductContext.tsx";
 
 interface Product {
@@ -19,13 +19,14 @@ interface Product {
   discount: number;
   quantity?: number;
   isfavourite?: boolean;
+  type: string;
 }
 
 function DetailProduct() {
   const [product, setProduct] = useState<Product | null>(null);
   const [favourites, setFavourites] = useState<Product[]>([]);
   const { addToCart, quantity, handleSetQuantity } = useProductContext();
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     try {

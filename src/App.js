@@ -16,8 +16,8 @@ import CheckoutPage from "./User/Checkout/CheckoutPage.tsx";
 import InformationPage from "./User/InformationPage/InformationPage.tsx";
 
 //ADMIN
-import AdminHome from "./Admin/AdminHome/AdminHome.tsx";
 import ProductList from "./Admin/AdminProductList/ProductList.tsx";
+import AdminHome from "./Admin/AdminHome/AdminHome.tsx";
 
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -25,7 +25,7 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <ProductProvider>
-      <div className="App">
+      <div className="App font-literata">
         <header className="App-header">
           <BrowserRouter>
             <Routes>
@@ -43,8 +43,8 @@ function App() {
               <Route path="/checkout" element={<CheckoutPage />} />
 
               {/* Admin */}
+              <Route path="/update-product" element={<ProductList />} />
               <Route path="/admin" element={<AdminHome />} />
-              <Route path="/manage-product" element={<ProductList />} />
             </Routes>
           </BrowserRouter>
           <ToastContainer

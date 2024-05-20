@@ -48,7 +48,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          "https://melanine-backend.onrender.com/api/product/get-all"
+          "http://localhost:3001/api/product/get-all"
         );
 
         if (!response.ok) {

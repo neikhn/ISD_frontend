@@ -1,4 +1,5 @@
 import React from 'react';
+import { useProductContext } from '../../User/ProductContext/ProductContext.tsx'; // Import useProductContext
 
 interface DeleteProductProps {
   productId: string;
@@ -6,9 +7,11 @@ interface DeleteProductProps {
 }
 
 const DeleteProduct: React.FC<DeleteProductProps> = ({ productId, onDeleteSuccess }) => {
+  const { products } = useProductContext(); // Use ProductContext
+
   const handleDelete = async () => {
     try {
-      const response = await fetch(`https://melanine-backend.onrender.com/api/product/delete/${productId}`, {
+      const response = await fetch(`http://localhost:3001/api/product/delete/${productId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': 'Bearer YOUR_AUTH_TOKEN' // Nếu cần xác thực
@@ -33,7 +36,7 @@ const DeleteProduct: React.FC<DeleteProductProps> = ({ productId, onDeleteSucces
   };
 
   return (
-    <button onClick={handleDelete}>Delete Product</button>
+    <button className='border-[1px] border-black' onClick={handleDelete}>Delete Product</button>
   );
 };
 

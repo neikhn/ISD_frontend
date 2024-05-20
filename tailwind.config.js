@@ -9,7 +9,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        Karla: ["Karla", "sans-serif"],
+        literata: ["Literata", "serif"],
       },
       colors: {
         pinky: {
@@ -35,6 +35,12 @@ module.exports = {
         slideUp: "slideUp 0.4s ease-in-out",
         fadeIn: "fadeIn 0.4s ease-in-out",
       },
+    },
+  },
+  variants: {
+    extend: {
+      backgroundColor: ["autofill"],
+      textColor: ["autofill"],
     },
   },
   plugins: [],

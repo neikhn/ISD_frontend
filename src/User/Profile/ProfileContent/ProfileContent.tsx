@@ -61,7 +61,7 @@ class ProfileContent extends React.Component<{}, ProfileState> {
       };
 
       const response = await fetch(
-        `https://melanine-backend.onrender.com/api/user/update-user/${_id}`,
+        `http://localhost:3001/api/user/update-user/${_id}`,
         {
           method: "PUT",
           headers: {
@@ -80,6 +80,29 @@ class ProfileContent extends React.Component<{}, ProfileState> {
     } catch (error) {
       console.error("Error updating profile:", error);
       alert("An error occurred while updating the profile.");
+    }
+  };
+
+  handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/api/user/log-out", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("profile");
+        window.location.href = "/login"; // Redirect to login page
+      } else {
+        const result = await response.json();
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error("Error logging out:", error);
+      alert("An error occurred while logging out.");
     }
   };
 
@@ -115,7 +138,18 @@ class ProfileContent extends React.Component<{}, ProfileState> {
             <div className="">
               <p className="text-black font-semibold">My wishlist</p>
             </div>
+
+            {/* Add Logout Button */}
+            <div className="mt-5">
+              <button
+                onClick={this.handleLogout}
+                className="py-2 px-4 bg-red-500 text-white rounded-md"
+              >
+                Logout
+              </button>
+            </div>
           </div>
+
           <div className="basis-3/4 flex flex-col h-full shadow-md px-5 py-3">
             <p className="text-pinky-600 text-xl font-semibold">
               Edit Your Profile

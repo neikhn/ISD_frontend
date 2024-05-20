@@ -6,6 +6,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 
+interface Product {
+  _id: string;
+  name: string;
+  image: string | string[];
+  price: number;
+  rating: number;
+  countInStock: number;
+  onSale?: boolean;
+  discount: number;
+  quantity?: number;
+  isfavourite?: boolean;
+}
+
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
@@ -38,18 +51,12 @@ const SearchComponent = () => {
   const query = useQuery();
   const searchTerm = query.get("query");
   const { filteredProducts, loadStoredSearchResults } = useProductContext();
-  const [favourites, setFavourites] = useState<string[]>([]); // Fix type to string[]
+  const [favourites, setFavourites] = useState<Product[]>([]);
   const { products } = useProductContext();
 
   useEffect(() => {
     loadStoredSearchResults();
   }, [loadStoredSearchResults]);
-
-  const getProductByNameOrId = (nameOrId: string) => {
-    return filteredProducts.find(
-      (product) => product.name === nameOrId || product._id === nameOrId
-    );
-  };
 
   const getProductById = (_id: string) => {
     return products.find((product) => product._id === _id);
@@ -62,17 +69,25 @@ const SearchComponent = () => {
     }
 
     setFavourites((prevFavourites) => {
-      const isFavorited = prevFavourites.includes(productId);
+      const isFavorited = prevFavourites.some((fav) => fav._id === productId);
       let updatedFavourites;
 
       if (isFavorited) {
         updatedFavourites = prevFavourites.filter(
-          (favId) => favId !== productId
+          (fav) => fav._id !== productId
         );
-        toast.warning("Đã xóa sản phẩm khỏi danh sách yêu thích");
+        // Using setTimeout to ensure toast is not called in quick succession
+        setTimeout(
+          () => toast.warning("Đã xóa sản phẩm khỏi danh sách yêu thích"),
+          0
+        );
       } else {
-        updatedFavourites = [...prevFavourites, productId];
-        toast.success("Đã thêm sản phẩm vào danh sách yêu thích");
+        updatedFavourites = [...prevFavourites, product];
+        // Using setTimeout to ensure toast is not called in quick succession
+        setTimeout(
+          () => toast.success("Đã thêm sản phẩm vào danh sách yêu thích"),
+          0
+        );
       }
 
       try {
@@ -110,7 +125,7 @@ const SearchComponent = () => {
 
     if (storedFavouritesJson) {
       try {
-        const storedFavourites = JSON.parse(storedFavouritesJson);
+        const storedFavourites: Product[] = JSON.parse(storedFavouritesJson);
         setFavourites(storedFavourites);
       } catch (error) {
         console.error("Failed to parse stored favourites:", error);
@@ -151,7 +166,9 @@ const SearchComponent = () => {
                   <div
                     id={`heartIcon-${product._id}`}
                     className={`absolute top-2 left-2 cursor-pointer drop-shadow-2xl ${
-                      favourites.includes(product._id) ? "text-red-600" : ""
+                      favourites.some((fav) => fav._id === product._id)
+                        ? "text-red-600"
+                        : ""
                     }`}
                     onClick={() => toggleFavourite(product._id)}
                   >
@@ -168,7 +185,7 @@ const SearchComponent = () => {
                       {product.name}
                     </h1>
                     <h1 className=" text-xs text-[#000] mb-8">
-                      {product.viewer}
+                      {product.rating}
                     </h1>
                     <h1 className=" text-l lg:text-xl text-[#000]">
                       {formatPrice(product.price)}
@@ -177,7 +194,9 @@ const SearchComponent = () => {
                   <div className="basic-1/2 flex flex-col justify-between items-center">
                     <div>{<StarRating />}</div>
                     <div className="text-s text-pinky-600 font-semibold">
-                      Out of stock
+                      {product.countInStock > 0
+                        ? "Còn hàng " + product.countInStock
+                        : "Out of stock"}
                     </div>
                   </div>
                 </div>

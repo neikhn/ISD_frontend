@@ -47,9 +47,7 @@ function StarRating() {
 }
 
 const FavListProduct: React.FC<FavListProductProps> = () => {
-  // Declare the type of the state as Product[]
   const { products } = useProductContext();
-
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -57,13 +55,17 @@ const FavListProduct: React.FC<FavListProductProps> = () => {
     setFavoriteProducts(favProducts);
   }, []);
 
-  const handleDeleteFavoriteProduct = (product) => {
+  const handleAddFavoriteProduct = (product: Product) => {
+    const updatedFavProducts = [...favoriteProducts, product];
+    setFavoriteProducts(updatedFavProducts);
+    localStorage.setItem("favourites", JSON.stringify(updatedFavProducts));
+    toast.success("Đã thêm sản phẩm vào danh sách yêu thích");
+  };
+
+  const handleDeleteFavoriteProduct = (product: Product) => {
     const updatedFavProducts = favoriteProducts.filter(
       (favProduct) => favProduct._id !== product._id
     );
-
-    const favoritedIds = updatedFavProducts.map((fav) => fav._id);
-    localStorage.setItem("favoritedIds", JSON.stringify(favoritedIds));
 
     setFavoriteProducts(updatedFavProducts);
     localStorage.setItem("favourites", JSON.stringify(updatedFavProducts));
@@ -84,7 +86,7 @@ const FavListProduct: React.FC<FavListProductProps> = () => {
     localStorage.setItem("selectedProduct", JSON.stringify(product));
   };
 
-  function formatPrice(price) {
+  function formatPrice(price: number) {
     return (
       new Intl.NumberFormat("en-US", {
         minimumFractionDigits: 0,
@@ -128,23 +130,26 @@ const FavListProduct: React.FC<FavListProductProps> = () => {
                   className="absolute top-2 left-2 cursor-pointer text-red-600 hover:opacity-80 active:opacity-90"
                   onClick={() => handleDeleteFavoriteProduct(product)}
                 >
-                  <FontAwesomeIcon className="" icon={faHeart} />
+                  <FontAwesomeIcon
+                    className="hover:opacity-85 active:opacity-90"
+                    icon={faHeart}
+                  />{" "}
                 </div>
               </div>
-              <div className="flex flex-row justify-between mb-5">
-                <div className="basic-1/2">
-                  <h1 className="text-l lg:text-xl text-[#000] mb-5">
+              <div className="flex flex-row justify-between mb-7">
+                <div className="basic-3/4">
+                  <h1 className="text-l lg:text-[18px] text-black mb-5 overflow-hidden whitespace-nowrap overflow-ellipsis w-[170px]">
                     {product.name}
                   </h1>
-                  <h1 className="text-xs text-[#000] mb-8">
+                  <h1 className=" text-xs text-[#000] mb-8">
                     <FontAwesomeIcon icon={faStar} /> {product.rating} đánh giá
                   </h1>
-                  <h1 className="text-l lg:text-xl text-[#000]">
+                  <h1 className=" text-l lg:text-[18px] text-[#000]">
                     {formatPrice(product.price)}
                   </h1>
                 </div>
-                <div className="basic-1/2 flex flex-col justify-between items-center">
-                  <StarRating />
+                <div className="basic-1/4 flex flex-col justify-between items-center">
+                  <div>{<StarRating />}</div>
                   <div className="text-s text-pinky-600 font-semibold">
                     {product.countInStock > 0
                       ? "Còn hàng " + product.countInStock
@@ -154,8 +159,8 @@ const FavListProduct: React.FC<FavListProductProps> = () => {
               </div>
 
               <NavLink
-                to={`/product/${product._id}`} // Ensure the link is using the product ID
-                onClick={() => handClickBuyNow(product._id)} // Ensure product ID is passed here
+                to={`/product/${product._id}`}
+                onClick={() => handClickBuyNow(product._id)}
                 className="buttonBuyNow flex justify-center items-center w-full h-12 rounded-xl bg-white border-2  border-red-600 text-pinky-600 hover:opacity-70 active:opacity-90 font-semibold cursor-pointer"
               >
                 MUA NGAY

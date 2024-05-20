@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faCaretUp, faCaretDown, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useProductContext } from "../../ProductContext/ProductContext.tsx";
 import { useNavigate, NavLink } from "react-router-dom";
 
@@ -84,13 +84,13 @@ function TotalCart() {
                 <div className="text-black">{product.name}</div>
               </div>
               <div className="text-black">{formatPrice(product.price)}</div>
-              <div className="quantity-container flex flex-col justify-center items-center w-[50px] h-full mr-[40px] border-2 border-black text-black">
+              <div className="quantity-container flex flex-row justify-center items-center w-[100px] h-full mr-[30px] border-[1px] border-black text-black gap-3">
                 <button onClick={() => incrQty(product._id)}>
-                  <FontAwesomeIcon icon={faCaretUp} />
+                  <FontAwesomeIcon icon={faMinus} />
                 </button>
                 <p>{product.quantity}</p>
                 <button onClick={() => decrQty(product._id)}>
-                  <FontAwesomeIcon icon={faCaretDown} />
+                  <FontAwesomeIcon icon={faPlus} />
                 </button>
               </div>
               <div className="text-black">
