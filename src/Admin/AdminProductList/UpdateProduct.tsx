@@ -46,7 +46,7 @@ const UpdateProduct: React.FC<UpdateProductProps> = ({
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:3001/api/product/update/${productId}`,
+        `https://melanine-backend.onrender.com/api/product/update/${productId}`,
         {
           method: "PUT",
           headers: {

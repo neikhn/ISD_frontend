@@ -31,7 +31,7 @@ const ProductList = () => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3001/api/product/get-all"
+          "https://melanine-backend.onrender.com/api/product/get-all"
         );
         const data = await response.json();
         if (data.status === "OK") {

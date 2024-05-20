@@ -61,7 +61,7 @@ class ProfileContent extends React.Component<{}, ProfileState> {
       };
 
       const response = await fetch(
-        `http://localhost:3001/api/user/update-user/${_id}`,
+        `https://melanine-backend.onrender.com/api/user/update-user/${_id}`,
         {
           method: "PUT",
           headers: {
@@ -85,7 +85,7 @@ class ProfileContent extends React.Component<{}, ProfileState> {
 
   handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:3001/api/user/log-out", {
+      const response = await fetch("https://melanine-backend.onrender.com/api/user/log-out", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

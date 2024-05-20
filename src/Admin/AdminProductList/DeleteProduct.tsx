@@ -11,7 +11,7 @@ const DeleteProduct: React.FC<DeleteProductProps> = ({ productId, onDeleteSucces
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/product/delete/${productId}`, {
+      const response = await fetch(`https://melanine-backend.onrender.com/api/product/delete/${productId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': 'Bearer YOUR_AUTH_TOKEN' // Nếu cần xác thực

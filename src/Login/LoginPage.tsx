@@ -28,7 +28,7 @@ function LoginPage() {
   const handleLogin = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:3001/api/user/sign-in", {
+      const response = await fetch("https://melanine-backend.onrender.com/api/user/sign-in", {
         method: "POST",
         body: JSON.stringify({
           email: userCredentials.EMAIL,

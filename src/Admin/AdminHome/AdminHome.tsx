@@ -24,7 +24,7 @@ function AdminHome() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3001/api/product/create", {
+      const response = await fetch("https://melanine-backend.onrender.com/api/product/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
