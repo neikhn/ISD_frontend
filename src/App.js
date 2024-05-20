@@ -8,6 +8,7 @@ import LoginPage from "./Login/LoginPage.tsx";
 import SignUp from "./Login/SignUp.tsx";
 import ShoppingCart from "./User/ShoppingCart/DetailProductPage.tsx";
 import DetailProduct from "./User/DetailProduct/Product.tsx";
+import Dress from "./User/Home/products/Dress/Dress.tsx";
 import FavListContainer from "./User/favList/FavListContainer.tsx";
 import SearchComponent from "./User/Search/SearchComponent.tsx";
 import Profile from "./User/Profile/Profile.tsx";
@@ -35,7 +36,9 @@ function App() {
               <Route path="/signup" element={<SignUp />} />
               <Route path="/home" element={<HomePageLoggedIn />} />
               <Route path="/favourite" element={<FavListContainer />} />
-              <Route path="/product/:productName" element={<DetailProduct />} />
+                {/* Product */}
+                <Route path="/product/:productName" element={<DetailProduct />} />
+                <Route path="/product/dress" element={<Dress />}/>
               <Route path="/carts" element={<ShoppingCart />} />
               <Route path="/search" element={<SearchComponent />} />
               <Route path="/profile" element={<Profile />} />

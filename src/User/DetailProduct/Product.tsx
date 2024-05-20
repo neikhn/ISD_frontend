@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import HomeHeader from "../HomeLoggedIn/HeaderLogin/HeaderLogin.tsx";
 import Footer from "../Home/footer/Footer.tsx";
-import { faHeart, faSearchPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHeart,
+  faMinus,
+  faPlus,
+  faSearchPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {  } from "react-router-dom";
 import { useProductContext } from "../ProductContext/ProductContext.tsx";
 
 interface Product {
@@ -15,6 +19,7 @@ interface Product {
   price: number;
   countInStock: number;
   rating: number;
+  description: string;
   onSale?: boolean;
   discount: number;
   quantity?: number;
@@ -26,7 +31,7 @@ function DetailProduct() {
   const [product, setProduct] = useState<Product | null>(null);
   const [favourites, setFavourites] = useState<Product[]>([]);
   const { addToCart, quantity, handleSetQuantity } = useProductContext();
-
+  const [isVisibleDescription, setVisibleDescription] = useState(false);
 
   useEffect(() => {
     try {
@@ -43,14 +48,18 @@ function DetailProduct() {
     }
   }, []);
 
+  const toggleContentDescription = () => {
+    setVisibleDescription(!isVisibleDescription);
+  };
+
   const handleQuantityChange = (event) => {
     handleSetQuantity(Number(event.target.value));
   };
 
   const handleCheckout = () => {
     if (product) {
-      toast.success("Thêm sản phẩm thành công!")
-      addToCart({...product, quantity});
+      toast.success("Thêm sản phẩm thành công!");
+      addToCart({ ...product, quantity });
     }
   };
 
@@ -131,7 +140,11 @@ function DetailProduct() {
                   className="basis-4/6 relative w-full h-full bg-black bg-cover bg-center shadow-2xl"
                   style={{
                     transition: "transform 0.3s ease",
-                    backgroundImage: `url(${product.image})`,
+                    backgroundImage: `url(${
+                      Array.isArray(product.image)
+                        ? product.image[0]
+                        : product.image
+                    })`,
                   }}
                 >
                   <div
@@ -143,14 +156,14 @@ function DetailProduct() {
                 </div>
                 {/*PRICE && INFORMATION*/}
                 <div className="basis-3/6 flex flex-col w-full text-[#FF9494]">
-                  <div className="productName  text-2xl font-bold my-3">
+                  <div className="productName text-2xl font-bold my-3 overflow-hidden whitespace-nowrap overflow-ellipsis w-[300px]">
                     {product.name}
                   </div>
 
-                  <div className="flex flex-row justify-between items-center  my-3">
+                  <div className="flex flex-row justify-between items-center my-3">
                     <div className="eCode text-l">
                       Mã sản phẩm:{" "}
-                      <span className="text-xl font-semibold">
+                      <span className="text-xl font-semibold overflow-hidden whitespace-nowrap overflow-ellipsis w-[50px]">
                         {product._id}
                       </span>
                     </div>
@@ -197,15 +210,13 @@ function DetailProduct() {
 
                   {/*BUTTON ADD TO CART AND FAVOURITE*/}
                   <div className="flex flex-row justify-between my-3">
-                    {/* <Link to={"/carts"}> */}
-                      <button
-                        type="submit"
-                        className="border-2 border-solid bg-pinky-600 text-white px-10 py-5 hover:opacity-80 active:opacity-90"
-                        onClick={handleCheckout}
-                      >
-                        Thêm vào giỏ hàng
-                      </button>
-                    {/* </Link> */}
+                    <button
+                      type="submit"
+                      className="border-2 border-solid bg-pinky-600 text-white px-10 py-5 hover:opacity-80 active:opacity-90"
+                      onClick={handleCheckout}
+                    >
+                      Thêm vào giỏ hàng
+                    </button>
 
                     <button
                       type="submit"
@@ -216,16 +227,22 @@ function DetailProduct() {
                     </button>
                   </div>
 
-                  {/*BUTTON PAY*/}
-                  {/* <NavLink to={"/carts"}>
-                    <button
-                      type="submit"
-                      className="w-full border-2 border-solid bg-pinky-600 text-white px-10 py-5 hover:opacity-80 active:opacity-90 mt-3"
-                      onClick={handleCheckout}
-                    >
-                      Thanh toán
-                    </button>
-                  </NavLink> */}
+                  {/* Description */}
+                  <div className="w-full h-[2px] bg-gradient-to-r from-pinky-50 to-pinky-600 my-8"></div>
+                  <div className="flex flex-row justify-between">
+                    <h3 className="text-l font-bold">Mô tả sản phẩm</h3>
+                    <FontAwesomeIcon
+                      icon={isVisibleDescription ? faMinus : faPlus}
+                      onClick={toggleContentDescription}
+                      className="cursor-pointer"
+                    />
+                  </div>
+                  {isVisibleDescription && (
+                    <div className="content-description mt-3 animate-slideDown">
+                      {product.description}
+                    </div>
+                  )}
+                  <div className="w-full h-[2px] bg-gradient-to-r from-pinky-50 to-pinky-600 mt-8"></div>
                 </div>
               </div>
             </div>

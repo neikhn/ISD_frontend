@@ -13,6 +13,7 @@ interface Product {
   image: string | string[];
   price: number;
   countInStock: number;
+  description: string;
   rating: number;
   onSale?: boolean;
   discount: number;

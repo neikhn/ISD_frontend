@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -103,7 +104,7 @@ const HomeHeader = () => {
             </li>
             <li
               className={`ct-menu-top-header relative ${
-                activeMenuItem === "COLLECTION"
+                activeMenuItem === "PRODUCT"
                   ? "ct-menu-top-header-active"
                   : ""
               }`}
@@ -111,7 +112,7 @@ const HomeHeader = () => {
               onMouseLeave={() => setShowProductMenu(false)}
             >
               <div className="flex flex-row justify-center items-center gap-3">
-                <div>Product</div>
+                <div>PRODUCT</div>
                 <FontAwesomeIcon icon={faAngleDown} />
               </div>
               {showProductMenu && (

@@ -1,7 +1,13 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretUp, faCaretDown, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCaretUp,
+  faCaretDown,
+  faMinus,
+  faPlus,
+  faCloudMeatball,
+} from "@fortawesome/free-solid-svg-icons";
 import { useProductContext } from "../../ProductContext/ProductContext.tsx";
 import { useNavigate, NavLink } from "react-router-dom";
 
@@ -59,49 +65,63 @@ function TotalCart() {
             Các sản phẩm được các khách hàng mua nhiều với đa số đều có phản hồi
             tốt
           </p>
-          <div className="flex flex-row md:w-[80%] justify-between items-center shadow-md mt-8 mb-12 px-10 py-5 font-bold gap-8">
-            <div className="text-black">Product</div>
-            <div className="text-black ml-[20px]">Price</div>
-            <div className="text-black">Quantity</div>
-            <div className="text-black">Subtotal</div>
-          </div>
+          {cart.length > 0 ? (
+            <>
+              <div className="flex flex-row md:w-[80%] justify-between items-center shadow-md mt-8 mb-12 px-10 py-5 font-bold gap-8">
+                <div className="text-black">Product</div>
+                <div className="text-black ml-[20px]">Price</div>
+                <div className="text-black">Quantity</div>
+                <div className="text-black">Subtotal</div>
+              </div>
 
-          {cart.map((product) => (
-            <div
-              key={product._id}
-              className="flex flex-row md:w-[80%] justify-between items-center shadow-md mt-8 mb-12 px-10 py-5 font-bold gap-8"
-            >
-              <div className="flex flex-col items-center gap-4">
-                <img
-                  className="w-20 h-20 object-cover"
-                  src={
-                    Array.isArray(product.image)
-                      ? product.image[0]
-                      : product.image
-                  }
-                  alt={`Image of ${product.name}`}
-                />
-                <div className="text-black">{product.name}</div>
-              </div>
-              <div className="text-black">{formatPrice(product.price)}</div>
-              <div className="quantity-container flex flex-row justify-center items-center w-[100px] h-full mr-[30px] border-[1px] border-black text-black gap-3">
-                <button onClick={() => incrQty(product._id)}>
-                  <FontAwesomeIcon icon={faMinus} />
-                </button>
-                <p>{product.quantity}</p>
-                <button onClick={() => decrQty(product._id)}>
-                  <FontAwesomeIcon icon={faPlus} />
-                </button>
-              </div>
-              <div className="text-black">
-                {formatPrice(
-                  product.quantity
-                    ? product.quantity * product.price
-                    : product.price
-                )}
-              </div>
+              {cart.map((product) => (
+                <div
+                  key={product._id}
+                  className="flex flex-row md:w-[80%] justify-between items-center shadow-md mt-8 mb-12 px-10 py-5 font-bold gap-8"
+                >
+                  <div className="flex flex-col items-center gap-4">
+                    <img
+                      className="w-20 h-20 object-cover"
+                      src={
+                        Array.isArray(product.image)
+                          ? product.image[0]
+                          : product.image
+                      }
+                      alt={`Image of ${product.name}`}
+                    />
+                    <div className="text-black">{product.name}</div>
+                  </div>
+                  <div className="text-black">{formatPrice(product.price)}</div>
+                  <div className="quantity-container flex flex-row justify-center items-center w-[100px] h-full mr-[30px] border-[1px] border-black text-black gap-3">
+                    <button onClick={() => decrQty(product._id)}>
+                      <FontAwesomeIcon icon={faMinus} />
+                    </button>
+                    <p>{product.quantity}</p>
+                    <button onClick={() => incrQty(product._id)}>
+                      <FontAwesomeIcon icon={faPlus} />
+                    </button>
+                  </div>
+                  <div className="text-black">
+                    {formatPrice(
+                      product.quantity
+                        ? product.quantity * product.price
+                        : product.price
+                    )}
+                  </div>
+                </div>
+              ))}
+            </>
+          ) : (
+            <div className="flex flex-col justify-center items-center mt-12">
+              <FontAwesomeIcon
+                className="text-black w-[100px] h-[100px]"
+                icon={faCloudMeatball}
+              />
+              <p className="text-black mt-5 text-xl">
+                Không có sản phẩm trong giỏ hàng
+              </p>
             </div>
-          ))}
+          )}
         </div>
       </div>
       <div className="flex justify-center items-center">

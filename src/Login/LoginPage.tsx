@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import "./LoginPage.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import Loading from "../Loading";
+import { text } from "@fortawesome/fontawesome-svg-core";
 
 function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -141,7 +142,9 @@ function LoginPage() {
             </a>
           </div>
 
-          {errorText !== "" && <span>{errorText}</span>}
+          {errorText !== "" && (
+            <span style={{ color: "red" }}>{errorText}</span>
+          )}
 
           <button type="button" className="login__button" onClick={handleLogin}>
             Đăng nhập
