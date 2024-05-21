@@ -315,7 +315,7 @@ const HomeHeader = () => {
                       to="/product/dress"
                       className="block px-4 py-2 hover:bg-gray-200"
                     >
-                     Váy
+                      Váy
                     </NavLink>
                   </li>
                 </ul>
@@ -326,7 +326,7 @@ const HomeHeader = () => {
                 activeMenuItem === "TRENDS" ? "ct-menu-top-header-active" : ""
               }`}
             >
-              <a href="#" onClick={() => handleMenuItemClick("jackets")}>
+              <a href="/trends" onClick={() => handleMenuItemClick("jackets")}>
                 TRENDS
               </a>
             </li>
@@ -335,7 +335,7 @@ const HomeHeader = () => {
                 activeMenuItem === "ABOUT US" ? "ct-menu-top-header-active" : ""
               }`}
             >
-              <a href="#" onClick={() => handleMenuItemClick("jeans")}>
+              <a href="/about-us" onClick={() => handleMenuItemClick("jeans")}>
                 ABOUT US
               </a>
             </li>
@@ -365,7 +365,7 @@ const HomeHeader = () => {
               <div className="search-inner ml-10">
                 <input
                   id="inputSearchAuto-3"
-                  className="visible outline-none absolute w-[50%] top-[6px] bg-slate-100"
+                  className="hidden xs:block outline-none absolute w-[50%] top-[6px] bg-slate-100"
                   name="q"
                   autoComplete="off"
                   type="text"
@@ -395,7 +395,7 @@ const HomeHeader = () => {
                 4
               </span> */}
             </a>
-            <a href="/profile" className="lg:block hidden w-6 h-6 text-black">
+            <a href="/profile" className="block w-6 h-6 text-black">
               <FontAwesomeIcon icon={faUser} />
             </a>
           </div>

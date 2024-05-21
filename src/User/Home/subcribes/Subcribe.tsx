@@ -18,7 +18,7 @@ class Subscribe extends React.Component {
                 </div>
 
                 <div className="text-4xl mb-6 text-pinky-600">
-                    MELINA FASHION
+                    MELANIE FASHION
                 </div>
 
                 <form className="form" onSubmit={this.handleSubmit}>

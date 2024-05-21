@@ -72,8 +72,8 @@ class Products extends React.Component<{}, State> {
             <div className="basis-1/4 w-[100%] h-full bg-[#FFD1D1] rounded-xl lg:rounded-tl-3xl lg:rounded-tr-3xl lg:rounded-br-[0px] lg:rounded-bl-3xl text-center relative">
               <div
                 className="absolute top-2 lg:top-8 left-3 lg:left-2 lg:right-4
-              text-center lg:bg-center w-[95%] lg:w-[90%] h-[90%] rounded-3xl
-              bg-[url('https://i.pinimg.com/736x/d1/ee/47/d1ee47c364a111307180b4d0b2a26d43.jpg')] bg-top bg-cover bg-no-repeat"
+              text-center w-[95%] lg:w-[90%] h-[90%] rounded-3xl
+              bg-[url('https://i.pinimg.com/736x/d1/ee/47/d1ee47c364a111307180b4d0b2a26d43.jpg')] xs:bg-center bg-cover bg-no-repeat"
               ></div>
             </div>
 

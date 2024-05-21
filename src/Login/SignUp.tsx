@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./LoginPage.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import Loading from "../Loading";
+import { toast } from "react-toastify";
 function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
   const [userCredentials, setUserCredentials] = useState({
@@ -10,6 +11,7 @@ function SignUp() {
     PASSWORD: "",
     CONFIRMPASSWORD: "",
   });
+  const [errorText, setErrorText] = useState("");
 
   const navigate = useNavigate();
 
@@ -25,25 +27,40 @@ function SignUp() {
   };
 
   const handleSignUp = async () => {
-    const response = await fetch("https://melanine-backend.onrender.com/api/user/sign-up", {
-      method: "post",
-      body: JSON.stringify({
-        name: userCredentials.NAME,
-        email: userCredentials.EMAIL,
-        password: userCredentials.PASSWORD,
-        confirmPassword: userCredentials.CONFIRMPASSWORD,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    setIsLoading(true);
+    setErrorText("");
+    try {
+      const response = await fetch("https://melanine-backend.onrender.com/api/user/sign-up", {
+        method: "post",
+        body: JSON.stringify({
+          name: userCredentials.NAME,
+          email: userCredentials.EMAIL,
+          password: userCredentials.PASSWORD,
+          confirmPassword: userCredentials.CONFIRMPASSWORD,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    const status = response.status;
-    if (status === 200) {
-      const data = await response.json();
-      //handle data
-      console.log(data);
-      navigate("/login");
+      const status = response.status;
+      if (status === 200) {
+        const data = await response.json();
+        // handle data
+        console.log(data);
+        navigate("/login");
+        toast.success("Đăng ký thành công!");
+      } else if (status === 409) {
+        setErrorText("Email đã được sử dụng");
+      } else {
+        setErrorText("Đăng ký thất bại. Vui lòng thử lại.");
+      }
+    } catch (error) {
+      console.error("Error during sign-up:", error);
+      setErrorText("Đã xảy ra lỗi. Vui lòng thử lại sau.");
+    } finally {
+      setIsLoading(false);
+
     }
   };
   return (
@@ -133,6 +150,12 @@ function SignUp() {
               </div>
             </div>
           </div>
+
+          {errorText !== "" && (
+            <span style={{ color: "red", marginBottom: "20px" }}>
+              {errorText}
+            </span>
+          )}
 
           <div className="login__check">
             <div className="login__check-group">

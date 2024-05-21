@@ -3,8 +3,13 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useProductContext } from "../ProductContext/ProductContext.tsx";
 import HeaderLogin from "../HomeLoggedIn/HeaderLogin/HeaderLogin.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCloudMeatball,
+  faHeart,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
+import Footer from "../Home/footer/Footer.tsx";
 
 interface Product {
   _id: string;
@@ -21,30 +26,6 @@ interface Product {
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
-};
-
-const StarRating = () => {
-  const [rating, setRating] = useState(0);
-  const [hover, setHover] = useState(0);
-  return (
-    <div className="star-rating">
-      {[...Array(5)].map((star, index) => {
-        index += 1;
-        return (
-          <button
-            type="button"
-            key={index}
-            className={index <= (hover || rating) ? "on" : "off"}
-            onClick={() => setRating(index)}
-            onMouseEnter={() => setHover(index)}
-            onMouseLeave={() => setHover(rating)}
-          >
-            <span className="star">&#9733;</span>
-          </button>
-        );
-      })}
-    </div>
-  );
 };
 
 const SearchComponent = () => {
@@ -141,79 +122,93 @@ const SearchComponent = () => {
       <div className="content-wrapper font-Karla max-w-screen-2xl text-base mx-auto mt-24">
         {/* Search Result */}
         <div className="line flex justify-center items-center w-full h-16 bg-gradient-to-r from-pinky-50 to-pinky-600 mb-10">
-          <div className="box-container flex justify-center items-center w-[20%] h-12 bg-white rounded-full">
+          <div className="box-container flex justify-center items-center h-12 bg-white rounded-full px-4">
             <h1 className=" text-xl text-[#FF9894] font-semibold text-center">
               Search Results for "{searchTerm}"
             </h1>
           </div>
         </div>
 
-        <div className="feature-mugs w-[90%] lg:w-[80%] mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-4 h-auto">
-            {filteredProducts.map((product) => (
-              <div
-                key={product._id}
-                className="product-card w-full h-[370px] lg:h-[450px] px-3 pt-5 bg-white shadow-md rounded-md mb-10"
-              >
+        <div className="feature-mugs w-[90%] lg:w-[80%] mx-auto mb-24">
+          {filteredProducts.length > 0 ? (
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-4 h-auto">
+              {filteredProducts.map((product) => (
                 <div
-                  className="relative w-full h-[150px] sm:h-[200px] rounded-md bg-cover bg-no-repeat bg-center mb-5"
-                  style={{
-                    backgroundImage: Array.isArray(product.image)
-                      ? `url(${product.image[0]})`
-                      : `url(${product.image})`,
-                  }}
+                  key={product._id}
+                  className="product-card w-full h-[400px] sm:h-[450px] px-3 pt-5 bg-white shadow-md rounded-md mb-10"
                 >
                   <div
-                    id={`heartIcon-${product._id}`}
-                    className={`absolute top-2 left-2 cursor-pointer drop-shadow-2xl ${
-                      favourites.some((fav) => fav._id === product._id)
-                        ? "text-red-600"
-                        : ""
-                    }`}
-                    onClick={() => toggleFavourite(product._id)}
+                    className="relative w-full h-[150px] sm:h-[200px] rounded-md bg-cover bg-no-repeat bg-center mb-5"
+                    style={{
+                      backgroundImage: Array.isArray(product.image)
+                        ? `url(${product.image[0]})`
+                        : `url(${product.image})`,
+                    }}
                   >
-                    <FontAwesomeIcon
-                      className=" hover:opacity-85 active:opacity-90"
-                      icon={faHeart}
-                    />
+                    <div
+                      id={`heartIcon-${product._id}`}
+                      className={`absolute top-2 left-2 cursor-pointer drop-shadow-2xl ${
+                        favourites.find((fav) => fav._id === product._id)
+                          ? "text-red-600"
+                          : ""
+                      }`}
+                      onClick={() => toggleFavourite(product._id)}
+                    >
+                      <FontAwesomeIcon
+                        className="hover:opacity-85 active:opacity-90"
+                        icon={faHeart}
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <div className="flex flex-row justify-between mb-5">
-                  <div className="basic-1/2">
-                    <h1 className=" text-l lg:text-xl text-[#000] mb-5">
+                  <div className="flex flex-col mb-7">
+                    <h1 className="text-l lg:text-[18px] font-bold text-black mb-5 overflow-hidden whitespace-nowrap overflow-ellipsis w-full">
                       {product.name}
                     </h1>
                     <h1 className=" text-xs text-[#000] mb-8">
-                      {product.rating}
+                      <FontAwesomeIcon icon={faStar} /> {product.rating} đánh
+                      giá
                     </h1>
-                    <h1 className=" text-l lg:text-xl text-[#000]">
-                      {formatPrice(product.price)}
-                    </h1>
-                  </div>
-                  <div className="basic-1/2 flex flex-col justify-between items-center">
-                    <div>{<StarRating />}</div>
-                    <div className="text-s text-pinky-600 font-semibold">
-                      {product.countInStock > 0
-                        ? "Còn hàng " + product.countInStock
-                        : "Out of stock"}
+                    <div className="flex flex-row justify-between">
+                      <h1 className=" text-l lg:text-[18px] text-[#000]">
+                        {formatPrice(product.price)}
+                      </h1>
+                      <div className="basic-1/2 lg:basic-1/4 flex flex-col justify-end items-end">
+                        <div className="text-xs xs:text-s text-pinky-600 font-semibold">
+                          {product.countInStock > 0
+                            ? "Còn hàng " + product.countInStock
+                            : "Out of stock"}
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <NavLink
-                  to={`/product/${product._id}`}
-                  onClick={() => handClickBuyNow(product._id)}
-                  className="buttonBuyNow flex justify-center items-center w-full h-12 rounded-xl bg-white border-2  border-red-600 text-pinky-600 hover:opacity-70 active:opacity-90 font-semibold cursor-pointer"
-                >
-                  MUA NGAY
-                </NavLink>
-              </div>
-            ))}
-          </div>
+                  <NavLink
+                    to={`/product/${product._id}`} // Ensure the link is using the product ID
+                    onClick={() => handClickBuyNow(product._id)} // Ensure product ID is passed here
+                    className="buttonBuyNow flex justify-center items-center w-full h-12 rounded-xl bg-white border-2  border-red-600 text-pinky-600 hover:opacity-70 active:opacity-90 font-semibold cursor-pointer"
+                  >
+                    MUA NGAY
+                  </NavLink>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col justify-center items-center my-40">
+              <FontAwesomeIcon
+                className="text-black w-[100px] h-[100px]"
+                icon={faCloudMeatball}
+              />
+              <p className="text-black mt-5 text-xl">
+                Không có sản phẩm tìm kiếm
+              </p>
+            </div>
+          )}
         </div>
         {/* END MORE PRODUCTS */}
       </div>
+
+      <Footer />
     </div>
   );
 };

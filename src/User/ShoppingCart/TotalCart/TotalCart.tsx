@@ -2,14 +2,14 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCaretUp,
-  faCaretDown,
   faMinus,
   faPlus,
   faCloudMeatball,
 } from "@fortawesome/free-solid-svg-icons";
 import { useProductContext } from "../../ProductContext/ProductContext.tsx";
 import { useNavigate, NavLink } from "react-router-dom";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import CSS
 
 interface Product {
   _id: string;
@@ -67,7 +67,7 @@ function TotalCart() {
           </p>
           {cart.length > 0 ? (
             <>
-              <div className="flex flex-row md:w-[80%] justify-between items-center shadow-md mt-8 mb-12 px-10 py-5 font-bold gap-8">
+              <div className="flex flex-row w-full md:w-[80%] mx-auto justify-between items-center shadow-md mt-8 px-10 py-5 font-bold gap-8">
                 <div className="text-black">Product</div>
                 <div className="text-black ml-[20px]">Price</div>
                 <div className="text-black">Quantity</div>
@@ -77,9 +77,9 @@ function TotalCart() {
               {cart.map((product) => (
                 <div
                   key={product._id}
-                  className="flex flex-row md:w-[80%] justify-between items-center shadow-md mt-8 mb-12 px-10 py-5 font-bold gap-8"
+                  className="flex flex-row md:w-[80%] justify-between items-center shadow-md mt-8 mb-12 px-10 py-5 font-bold gap-8 text-xs"
                 >
-                  <div className="flex flex-col items-center gap-4">
+                  <div className="flex flex-col justify-center items-start gap-4">
                     <img
                       className="w-20 h-20 object-cover"
                       src={
@@ -89,10 +89,12 @@ function TotalCart() {
                       }
                       alt={`Image of ${product.name}`}
                     />
-                    <div className="text-black">{product.name}</div>
+                    <div className="text-black w-[150px] text-justify">
+                      {product.name}
+                    </div>
                   </div>
                   <div className="text-black">{formatPrice(product.price)}</div>
-                  <div className="quantity-container flex flex-row justify-center items-center w-[100px] h-full mr-[30px] border-[1px] border-black text-black gap-3">
+                  <div className="quantity-container flex flex-row justify-center items-center w-[100px] h-full mr-[30px] border-[1px] border-black text-black gap-3 py-2">
                     <button onClick={() => decrQty(product._id)}>
                       <FontAwesomeIcon icon={faMinus} />
                     </button>

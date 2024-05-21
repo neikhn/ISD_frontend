@@ -140,7 +140,7 @@ const Dress = () => {
             {dresses.map((product) => (
               <div
                 key={product._id}
-                className="product-card w-full h-[370px] lg:h-[450px] px-3 pt-5 bg-white shadow-md rounded-md mb-10"
+                className="product-card w-full h-[400px] sm:h-[450px] px-3 pt-5 bg-white shadow-md rounded-md mb-10"
               >
                 <div
                   className="relative w-full h-[150px] sm:h-[200px] rounded-md bg-cover bg-no-repeat bg-center mb-5"
@@ -151,45 +151,45 @@ const Dress = () => {
                   }}
                 >
                   <div
-                    className={`absolute top-2 left-2 cursor-pointer ${
+                    id={`heartIcon-${product._id}`}
+                    className={`absolute top-2 left-2 cursor-pointer drop-shadow-2xl ${
                       favourites.find((fav) => fav._id === product._id)
                         ? "text-red-600"
                         : ""
-                    } hover:opacity-80 active:opacity-90`}
+                    }`}
                     onClick={() => toggleFavourite(product._id)}
                   >
                     <FontAwesomeIcon
                       className="hover:opacity-85 active:opacity-90"
                       icon={faHeart}
-                    />{" "}
+                    />
                   </div>
                 </div>
-                <div className="flex flex-row justify-between mb-7">
-                  <div className="basic-3/4">
-                    <h1 className="text-l lg:text-[18px] text-black mb-5 overflow-hidden whitespace-nowrap overflow-ellipsis w-[170px]">
-                      {product.name}
-                    </h1>
-                    <h1 className=" text-xs text-[#000] mb-8">
-                      <FontAwesomeIcon icon={faStar} /> {product.rating} đánh
-                      giá
-                    </h1>
+
+                <div className="flex flex-col mb-7">
+                  <h1 className="text-l lg:text-[18px] font-bold text-black mb-5 overflow-hidden whitespace-nowrap overflow-ellipsis w-full">
+                    {product.name}
+                  </h1>
+                  <h1 className=" text-xs text-[#000] mb-8">
+                    <FontAwesomeIcon icon={faStar} /> {product.rating} đánh giá
+                  </h1>
+                  <div className="flex flex-row justify-between">
                     <h1 className=" text-l lg:text-[18px] text-[#000]">
                       {formatPrice(product.price)}
                     </h1>
-                  </div>
-                  <div className="basic-1/4 flex flex-col justify-between items-center">
-                    <div>{<StarRating />}</div>
-                    <div className="text-s text-pinky-600 font-semibold">
-                      {product.countInStock > 0
-                        ? "Còn hàng " + product.countInStock
-                        : "Out of stock"}
+                    <div className="basic-1/2 lg:basic-1/4 flex flex-col justify-end items-end">
+                      <div className="text-xs xs:text-s text-pinky-600 font-semibold">
+                        {product.countInStock > 0
+                          ? "Còn hàng " + product.countInStock
+                          : "Out of stock"}
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 <NavLink
-                  to={`/product/${product._id}`}
-                  onClick={() => handleClickBuyNow(product._id)}
+                  to={`/product/${product._id}`} // Ensure the link is using the product ID
+                  onClick={() => handleClickBuyNow(product._id)} // Ensure product ID is passed here
                   className="buttonBuyNow flex justify-center items-center w-full h-12 rounded-xl bg-white border-2  border-red-600 text-pinky-600 hover:opacity-70 active:opacity-90 font-semibold cursor-pointer"
                 >
                   MUA NGAY
