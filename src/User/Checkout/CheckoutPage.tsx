@@ -54,7 +54,7 @@ function CheckoutPage() {
 
     try {
       const response = await fetch(
-        `https://melanine-backend.onrender.com/api/order/create/${userId}`,
+        `http://localhost:3001/api/order/create/${userId}`,
         {
           method: "POST",
           headers: {
