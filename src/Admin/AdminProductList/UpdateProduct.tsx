@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
 interface Product {
   _id: string;
   name: string;
@@ -60,7 +59,7 @@ const UpdateProduct: React.FC<UpdateProductProps> = ({
 
       const data = await response.json();
       if (data.status === "OK") {
-        toast.success("Đã sửa thành công!")
+        console.log("Product updated successfully:", data.data);
         onUpdateSuccess(data.data);
       } else {
         console.error(data.message);

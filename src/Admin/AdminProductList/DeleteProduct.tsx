@@ -1,6 +1,5 @@
 import React from 'react';
 import { useProductContext } from '../../User/ProductContext/ProductContext.tsx'; // Import useProductContext
-import { toast } from 'react-toastify';
 
 interface DeleteProductProps {
   productId: string;
@@ -26,7 +25,7 @@ const DeleteProduct: React.FC<DeleteProductProps> = ({ productId, onDeleteSucces
 
       const data = await response.json();
       if (data.status === 'OK') {
-        toast.success('Xóa thành công sản phẩm!');
+        console.log('Product deleted successfully');
         onDeleteSuccess(productId);
       } else {
         console.error(data.message);

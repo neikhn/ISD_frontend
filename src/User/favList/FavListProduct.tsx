@@ -26,6 +26,30 @@ type FavListProductProps = {
   products: Product[];
 };
 
+function StarRating() {
+  const [rating, setRating] = useState(0);
+  const [hover, setHover] = useState(0);
+  return (
+    <div className="star-rating">
+      {[...Array(5)].map((_, index) => {
+        const keyIndex = index + 1;
+        return (
+          <button
+            type="button"
+            key={keyIndex}
+            className={keyIndex <= (hover || rating) ? "on" : "off"}
+            onClick={() => setRating(keyIndex)}
+            onMouseEnter={() => setHover(keyIndex)}
+            onMouseLeave={() => setHover(rating)}
+          >
+            <span className="star">&#9733;</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 const FavListProduct: React.FC<FavListProductProps> = () => {
   const { products } = useProductContext();
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
@@ -34,6 +58,13 @@ const FavListProduct: React.FC<FavListProductProps> = () => {
     const favProducts = JSON.parse(localStorage.getItem("favourites") || "[]");
     setFavoriteProducts(favProducts);
   }, []);
+
+  const handleAddFavoriteProduct = (product: Product) => {
+    const updatedFavProducts = [...favoriteProducts, product];
+    setFavoriteProducts(updatedFavProducts);
+    localStorage.setItem("favourites", JSON.stringify(updatedFavProducts));
+    toast.success("Đã thêm sản phẩm vào danh sách yêu thích");
+  };
 
   const handleDeleteFavoriteProduct = (product: Product) => {
     const updatedFavProducts = favoriteProducts.filter(
@@ -90,7 +121,7 @@ const FavListProduct: React.FC<FavListProductProps> = () => {
             {favoriteProducts.map((product) => (
               <div
                 key={product._id}
-                className="product-card w-full h-[400px] sm:h-[450px] px-3 pt-5 bg-white shadow-md rounded-md mb-10"
+                className="product-card w-full h-[370px] lg:h-[450px] px-3 pt-5 bg-white shadow-md rounded-md mb-10"
               >
                 <div
                   className="relative w-full h-[150px] sm:h-[200px] rounded-md bg-cover bg-no-repeat bg-center mb-5"
@@ -110,31 +141,32 @@ const FavListProduct: React.FC<FavListProductProps> = () => {
                     />{" "}
                   </div>
                 </div>
-
-                <div className="flex flex-col mb-7">
-                  <h1 className="text-l lg:text-[18px] font-bold text-black mb-5 overflow-hidden whitespace-nowrap overflow-ellipsis w-full">
-                    {product.name}
-                  </h1>
-                  <h1 className=" text-xs text-[#000] mb-8">
-                    <FontAwesomeIcon icon={faStar} /> {product.rating} đánh giá
-                  </h1>
-                  <div className="flex flex-row justify-between">
+                <div className="flex flex-row justify-between mb-7">
+                  <div className="basic-3/4">
+                    <h1 className="text-l lg:text-[18px] text-black mb-5 overflow-hidden whitespace-nowrap overflow-ellipsis w-[170px]">
+                      {product.name}
+                    </h1>
+                    <h1 className=" text-xs text-[#000] mb-8">
+                      <FontAwesomeIcon icon={faStar} /> {product.rating} đánh
+                      giá
+                    </h1>
                     <h1 className=" text-l lg:text-[18px] text-[#000]">
                       {formatPrice(product.price)}
                     </h1>
-                    <div className="basic-1/2 lg:basic-1/4 flex flex-col justify-end items-end">
-                      <div className="text-xs xs:text-s text-pinky-600 font-semibold">
-                        {product.countInStock > 0
-                          ? "Còn hàng " + product.countInStock
-                          : "Out of stock"}
-                      </div>
+                  </div>
+                  <div className="basic-1/4 flex flex-col justify-between items-center">
+                    <div>{<StarRating />}</div>
+                    <div className="text-s text-pinky-600 font-semibold">
+                      {product.countInStock > 0
+                        ? "Còn hàng " + product.countInStock
+                        : "Out of stock"}
                     </div>
                   </div>
                 </div>
 
                 <NavLink
-                  to={`/product/${product._id}`} // Ensure the link is using the product ID
-                  onClick={() => handClickBuyNow(product._id)} // Ensure product ID is passed here
+                  to={`/product/${product._id}`}
+                  onClick={() => handClickBuyNow(product._id)}
                   className="buttonBuyNow flex justify-center items-center w-full h-12 rounded-xl bg-white border-2  border-red-600 text-pinky-600 hover:opacity-70 active:opacity-90 font-semibold cursor-pointer"
                 >
                   MUA NGAY
@@ -148,9 +180,7 @@ const FavListProduct: React.FC<FavListProductProps> = () => {
               className="text-black w-[100px] h-[100px]"
               icon={faCloudMeatball}
             />
-            <p className="text-black mt-5 text-xl">
-              Không có sản phẩm trong giỏ hàng
-            </p>
+            <p className="text-black mt-5 text-xl">Không có sản phẩm trong giỏ hàng</p>
           </div>
         )}
       </div>
