@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import "./LoginPage.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import Loading from "../Loading";
-import { text } from "@fortawesome/fontawesome-svg-core";
 
 function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);

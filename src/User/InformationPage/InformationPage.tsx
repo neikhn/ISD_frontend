@@ -3,11 +3,10 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import HeaderLogin from "../HomeLoggedIn/HeaderLogin/HeaderLogin.tsx";
 import Footer from "../Home/footer/Footer.tsx";
-import TotalCart from "../ShoppingCart/TotalCart/TotalCart.tsx";
 
 function InformationPage() {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(""); 
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [phone, setPhone] = useState("");
@@ -35,14 +34,14 @@ function InformationPage() {
     <div className="content-wrapper font-Karla max-w-screen-2xl text-base mx-auto">
       <HeaderLogin />
       {/* Main Content */}
-      <div className="information-page text-black mt-24">
+      <div className="information-page text-black mt-40 lg:mt-24">
         <h1 className="text-center text-[30px]">Điền Thông Tin</h1>
-        <div className="information-cart flex flex-row justify-center items-center w-[80%] mx-auto gap-8 my-10">
-          <div className="basic-1/2 list-product flex flex-col justify-center items-center w-[50%] h-auto border-[1px] border-black border-solid">
+        <div className="information-cart flex flex-col lg:flex-row justify-center items-center w-[80%] mx-auto gap-8 my-10">
+          <div className="basic-1/2 list-product flex flex-col justify-center items-center w-full lg:w-[50%] h-auto border-[1px] border-black border-solid">
             {cart.map((product) => {
               return (
                 <>
-                  <div className="product flex flex-row justify-center items-end p-2">
+                  <div className="product flex flex-row justify-center items-start lg:items-end p-2 text-xs md:text-l">
                     <img
                       className="w-20 h-20 object-cover"
                       src={

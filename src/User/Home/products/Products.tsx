@@ -21,29 +21,29 @@ interface Product {
   isfavourite?: boolean;
 }
 
-const StarRating = () => {
-  const [rating, setRating] = useState(0);
-  const [hover, setHover] = useState(0);
-  return (
-    <div className="star-rating">
-      {[...Array(5)].map((star, index) => {
-        index += 1;
-        return (
-          <button
-            type="button"
-            key={index}
-            className={index <= (hover || rating) ? "on" : "off"}
-            onClick={() => setRating(index)}
-            onMouseEnter={() => setHover(index)}
-            onMouseLeave={() => setHover(rating)}
-          >
-            <span className="star">&#9733;</span>
-          </button>
-        );
-      })}
-    </div>
-  );
-};
+// const StarRating = () => {
+//   const [rating, setRating] = useState(0);
+//   const [hover, setHover] = useState(0);
+//   return (
+//     <div className="star-rating">
+//       {[...Array(5)].map((star, index) => {
+//         index += 1;
+//         return (
+//           <button
+//             type="button"
+//             key={index}
+//             className={index <= (hover || rating) ? "on" : "off"}
+//             onClick={() => setRating(index)}
+//             onMouseEnter={() => setHover(index)}
+//             onMouseLeave={() => setHover(rating)}
+//           >
+//             <span className="star">&#9733;</span>
+//           </button>
+//         );
+//       })}
+//     </div>
+//   );
+// };
 
 const Products = () => {
   const { products } = useProductContext();
@@ -193,7 +193,7 @@ const Products = () => {
           {displayProducts.map((product) => (
             <div
               key={product._id}
-              className="product-card w-full h-[370px] lg:h-[450px] px-3 pt-5 bg-white shadow-md rounded-md mb-10"
+              className="product-card w-full h-[400px] sm:h-[450px] px-3 pt-5 bg-white shadow-md rounded-md mb-10"
             >
               <div
                 className="relative w-full h-[150px] sm:h-[200px] rounded-md bg-cover bg-no-repeat bg-center mb-5"
@@ -219,22 +219,23 @@ const Products = () => {
                 </div>
               </div>
 
-              <div className="flex flex-row justify-between mb-7">
-                <div className="basic-3/4">
-                  <h1 className="text-l lg:text-[18px] text-black mb-5 overflow-hidden whitespace-nowrap overflow-ellipsis w-[170px]">
-                    {product.name}
-                  </h1>
-                  <h1 className=" text-xs text-[#000] mb-8">
-                    <FontAwesomeIcon icon={faStar}/> {product.rating} đánh giá
-                  </h1>
+              <div className="flex flex-col mb-7">
+                <h1 className="text-l lg:text-[18px] font-bold text-black mb-5 overflow-hidden whitespace-nowrap overflow-ellipsis w-full">
+                  {product.name}
+                </h1>
+                <h1 className=" text-xs text-[#000] mb-8">
+                  <FontAwesomeIcon icon={faStar} /> {product.rating} đánh giá
+                </h1>
+                <div className="flex flex-row justify-between">
                   <h1 className=" text-l lg:text-[18px] text-[#000]">
                     {formatPrice(product.price)}
                   </h1>
-                </div>
-                <div className="basic-1/4 flex flex-col justify-between items-center">
-                  <div>{<StarRating />}</div>
-                  <div className="text-s text-pinky-600 font-semibold">
-                    {product.countInStock > 0 ? "Còn hàng "  + product.countInStock : "Out of stock"}
+                  <div className="basic-1/2 lg:basic-1/4 flex flex-col justify-end items-end">
+                    <div className="text-xs xs:text-s text-pinky-600 font-semibold">
+                      {product.countInStock > 0
+                        ? "Còn hàng " + product.countInStock
+                        : "Out of stock"}
+                    </div>
                   </div>
                 </div>
               </div>

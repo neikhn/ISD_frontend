@@ -20,7 +20,7 @@ const HomeSlider = (props) => {
     slideRef.current.prepend(items[items.length - 1]);
   };
 
-  const deadline = new Date('2024-04-15T10:00:00');
+  const deadline = new Date('2024-06-17T09:00:00');
 
   const data = [
     {

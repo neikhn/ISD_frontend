@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useProductContext } from "../ProductContext/ProductContext.tsx";
+import { NavLink, useNavigate } from "react-router-dom";
 
 interface Product {
   _id: string;
@@ -32,6 +33,7 @@ function DetailProduct() {
   const [favourites, setFavourites] = useState<Product[]>([]);
   const { addToCart, quantity, handleSetQuantity } = useProductContext();
   const [isVisibleDescription, setVisibleDescription] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     try {
@@ -125,19 +127,23 @@ function DetailProduct() {
             <div className="flex flex-col justify-center items-start w-[95%] lg:w-[70%] mx-auto">
               {/*BREADCUMBS*/}
               <div className="flex flex-row justify-start items-start text-[#FF9494] text-l italic mb-2">
-                <p>Home ||</p>
-                <p className="ml-3">Product ||</p>
+                <NavLink to={"/home"}>
+                  <p className="hover:opacity-80">Home ||</p>
+                </NavLink>
+                <NavLink to={"/trends"}>
+                  <p className="ml-3 hover:opacity-80">Product ||</p>
+                </NavLink>
                 <p className="font-bold ml-3"> {product.name}</p>
               </div>
               {/*LINE*/}
               <div className="w-full h-[2px] bg-gradient-to-r from-pinky-50 to-pinky-600 mb-10"></div>
               {/*IMAGE && PRICE && INFORMATION*/}
 
-              <div className="flex flex-row w-full h-[625px] gap-x-10 uppercase">
+              <div className="flex flex-col md:flex-row w-full h-[1250px] md:h-[625px] gap-x-10 uppercase mb-0 lg:mb-24">
                 {/*IMAGE*/}
                 <div
                   ref={imgRef}
-                  className="basis-4/6 relative w-full h-full bg-black bg-cover bg-center shadow-2xl"
+                  className="basic-1 md:basis-4/6 relative w-full h-full bg-black bg-cover bg-center shadow-2xl mb-3 md:mb-0"
                   style={{
                     transition: "transform 0.3s ease",
                     backgroundImage: `url(${
@@ -155,8 +161,8 @@ function DetailProduct() {
                   </div>
                 </div>
                 {/*PRICE && INFORMATION*/}
-                <div className="basis-3/6 flex flex-col w-full text-[#FF9494]">
-                  <div className="productName text-2xl font-bold my-3 overflow-hidden whitespace-nowrap overflow-ellipsis w-[300px]">
+                <div className="md:basis-3/6 flex flex-col w-full text-[#FF9494]">
+                  <div className="productName text-2xl font-bold my-3 overflow-hidden whitespace-nowrap overflow-ellipsis w-full">
                     {product.name}
                   </div>
 
@@ -164,7 +170,7 @@ function DetailProduct() {
                     <div className="eCode text-l">
                       Mã sản phẩm:{" "}
                       <span className="text-xl font-semibold overflow-hidden whitespace-nowrap overflow-ellipsis w-[50px]">
-                        {product._id}
+                        664B4695270404
                       </span>
                     </div>
                     <div className="condition text-l">
@@ -183,7 +189,10 @@ function DetailProduct() {
                     aria-required
                   >
                     <div className="w-full h-[2px] bg-gradient-to-r from-pinky-50 to-pinky-600 mb-8"></div>
-                    <h3 className="text-2xl font-bold">Freesize</h3>
+                    <div className="flex flex-row justify-between">
+                      <h3 className="text-2xl font-bold">Freesize</h3>
+                      <h3 className="text-2xl font-bold">Dạng: {product.type}</h3>
+                    </div>
                     <div className="w-full h-[2px] bg-gradient-to-r from-pinky-50 to-pinky-600 mt-8"></div>
                   </div>
 
@@ -209,7 +218,7 @@ function DetailProduct() {
                   </div>
 
                   {/*BUTTON ADD TO CART AND FAVOURITE*/}
-                  <div className="flex flex-row justify-between my-3">
+                  <div className="flex flex-row justify-between mt-3">
                     <button
                       type="submit"
                       className="border-2 border-solid bg-pinky-600 text-white px-10 py-5 hover:opacity-80 active:opacity-90"
@@ -228,8 +237,8 @@ function DetailProduct() {
                   </div>
 
                   {/* Description */}
-                  <div className="w-full h-[2px] bg-gradient-to-r from-pinky-50 to-pinky-600 my-8"></div>
-                  <div className="flex flex-row justify-between">
+                  <div className="w-full h-[2px] bg-gradient-to-r from-pinky-50 to-pinky-600 my-3"></div>
+                  <div className="flex flex-row justify-between mt-3">
                     <h3 className="text-l font-bold">Mô tả sản phẩm</h3>
                     <FontAwesomeIcon
                       icon={isVisibleDescription ? faMinus : faPlus}
@@ -238,11 +247,11 @@ function DetailProduct() {
                     />
                   </div>
                   {isVisibleDescription && (
-                    <div className="content-description mt-3 animate-slideDown">
+                    <p className="content-description text-xs leading-5 text-justify w-full h-auto animate-slideDown mt-3">
                       {product.description}
-                    </div>
+                    </p>
                   )}
-                  <div className="w-full h-[2px] bg-gradient-to-r from-pinky-50 to-pinky-600 mt-8"></div>
+                  <div className="w-full h-[2px] bg-gradient-to-r from-pinky-50 to-pinky-600 mt-3"></div>
                 </div>
               </div>
             </div>
