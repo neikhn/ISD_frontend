@@ -6,6 +6,8 @@ import React, {
   useEffect,
 } from "react";
 import { toast } from "react-toastify";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import CSS
 
 interface Product {
   _id: string;
@@ -105,28 +107,48 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     setCart((prevCart) => {
       if (!Array.isArray(prevCart)) return []; // Ensure prevCart is an array
 
-      let productRemoved = false;
+      let productToDecrement = prevCart.find(
+        (product) => product._id === productId
+      );
 
-      const updatedCart = prevCart
-        .map((product) => {
-          if (product._id === productId) {
-            const newQuantity = (product.quantity || 0) - 1;
-            if (newQuantity > 0) {
-              return { ...product, quantity: newQuantity };
-            } else {
-              productRemoved = true; // Mark that the product is removed
-              return null; // Mark product for removal
-            }
-          }
-          return product;
-        })
-        .filter((product): product is Product => product !== null); // Remove null values
-
-      if (productRemoved) {
-        toast.warning("Product removed from cart");
+      if (productToDecrement && (productToDecrement.quantity || 0) <= 1) {
+        confirmAlert({
+          title: "Xác nhận",
+          message: "Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?",
+          buttons: [
+            {
+              label: "Có",
+              onClick: () => {
+                setCart((prevCart) =>
+                  prevCart.filter((product) => product._id !== productId)
+                );
+                toast.warning("Product removed from cart");
+              },
+            },
+            {
+              label: "Không",
+              onClick: () => {
+                setCart((prevCart) => {
+                  return prevCart.map((product) =>
+                    product._id === productId
+                      ? { ...product, quantity: 1 }
+                      : product
+                  );
+                });
+              },
+            },
+          ],
+        });
+      } else {
+        const updatedCart = prevCart.map((product) =>
+          product._id === productId
+            ? { ...product, quantity: (product.quantity || 0) - 1 }
+            : product
+        );
+        return updatedCart;
       }
 
-      return updatedCart;
+      return prevCart;
     });
   };
 
